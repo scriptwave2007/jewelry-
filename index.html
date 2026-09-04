@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxe & Co. | Fine Jewelry</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">LUXE & CO.</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <div class="cart-icon" id="cart-btn">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cart-count">0</span>
+    </div>
+  </nav>
+
+  <header id="home" class="hero">
+    <div class="hero-content">
+      <h1>Timeless Elegance</h1>
+      <p>Handcrafted fine jewelry designed to last a lifetime.</p>
+      <a href="#shop" class="btn">Explore Collection</a>
+    </div>
+  </header>
+
+  <section id="shop" class="products-section">
+    <h2>Featured Collections</h2>
+    <div class="product-grid" id="product-grid">
+      </div>
+  </section>
+
+  <div class="cart-modal" id="cart-modal">
+    <div class="cart-content">
+      <span class="close-btn" id="close-cart">&times;</span>
+      <h2>Your Shopping Bag</h2>
+      <ul class="cart-items" id="cart-items">
+        </ul>
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total-price">$0</span>
+      </div>
+      <button class="btn checkout-btn">Checkout</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
