@@ -1,55 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luxe & Co. | Fine Jewelry</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudyHub - Video & PDF Learning</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <nav class="navbar">
-    <div class="logo">LUXE & CO.</div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#shop">Shop</a></li>
-      <li><a href="#about">About</a></li>
-    </ul>
-    <div class="cart-icon" id="cart-btn">
-      <i class="fas fa-shopping-bag"></i>
-      <span id="cart-count">0</span>
+    <!-- ================= HEADER ================= -->
+
+    <header>
+        <div class="logo">
+            Study<span>Hub</span>
+        </div>
+
+        <nav>
+            <a href="#">Home</a>
+            <a href="#library">My Library</a>
+            <a href="#upload">Upload</a>
+        </nav>
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <!-- Hero Section -->
+
+        <section class="hero">
+
+            <h1>My Learning Library</h1>
+
+            <p>
+                Upload your lectures, videos and PDF notes in one place.
+            </p>
+
+
+            <!-- Upload Box -->
+
+            <div class="upload-area" id="upload">
+
+                <h2>📚 Add Course Material</h2>
+
+                <p>
+                    Select one or multiple video/PDF files.
+                </p>
+
+
+                <label class="btn" for="fileInput">
+                    ＋ Upload Files
+                </label>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    multiple
+                    accept="video/*,application/pdf,.pdf"
+                >
+
+
+                <button
+                    class="btn secondary"
+                    onclick="clearAll()"
+                >
+                    Clear Library
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <div class="stats">
+
+            <div class="stat">
+                Videos:
+                <b id="videoCount">0</b>
+            </div>
+
+            <div class="stat">
+                PDFs:
+                <b id="pdfCount">0</b>
+            </div>
+
+            <div class="stat">
+                Total:
+                <b id="totalCount">0</b>
+            </div>
+
+        </div>
+
+
+        <!-- ================= LIBRARY ================= -->
+
+        <section id="library">
+
+            <!-- Filter Buttons -->
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    onclick="filterItems('all', this)"
+                >
+                    All
+                </button>
+
+                <button
+                    class="tab"
+                    onclick="filterItems('video', this)"
+                >
+                    Videos
+                </button>
+
+                <button
+                    class="tab"
+                    onclick="filterItems('pdf', this)"
+                >
+                    PDF Notes
+                </button>
+
+            </div>
+
+
+            <!-- Uploaded Files -->
+
+            <div
+                class="grid"
+                id="grid"
+            >
+
+                <div class="empty">
+
+                    No files yet.
+                    Upload your first video or PDF.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= VIEWER MODAL ================= -->
+
+    <div
+        class="modal"
+        id="modal"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close"
+                onclick="closeViewer()"
+            >
+                ×
+            </button>
+
+            <div id="viewer"></div>
+
+        </div>
+
     </div>
-  </nav>
 
-  <header id="home" class="hero">
-    <div class="hero-content">
-      <h1>Timeless Elegance</h1>
-      <p>Handcrafted fine jewelry designed to last a lifetime.</p>
-      <a href="#shop" class="btn">Explore Collection</a>
-    </div>
-  </header>
 
-  <section id="shop" class="products-section">
-    <h2>Featured Collections</h2>
-    <div class="product-grid" id="product-grid">
-      </div>
-  </section>
+    <!-- JavaScript -->
 
-  <div class="cart-modal" id="cart-modal">
-    <div class="cart-content">
-      <span class="close-btn" id="close-cart">&times;</span>
-      <h2>Your Shopping Bag</h2>
-      <ul class="cart-items" id="cart-items">
-        </ul>
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cart-total-price">$0</span>
-      </div>
-      <button class="btn checkout-btn">Checkout</button>
-    </div>
-  </div>
+    <script src="script.js"></script>
 
-  <script src="script.js"></script>
 </body>
 </html>
