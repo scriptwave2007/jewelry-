@@ -1,83 +1,594 @@
-// Sample Jewelry Product Data
-const products = [
-  {
-    id: 1,
-    name: "Solitaire Diamond Ring",
-    price: 1250,
-    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 2,
-    name: "18k Gold Layered Necklace",
-    price: 450,
-    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 3,
-    name: "Pearl Drop Earrings",
-    price: 280,
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 4,
-    name: "Minimalist Gold Cuff",
-    price: 320,
-    image: "https://images.unsplash.com/photo-1611591475140-49886469c240?auto=format&fit=crop&w=600&q=80"
-  }
-];
+/* =====================================
+   FILE STORAGE ARRAY
+===================================== */
 
-let cart = [];
+let items = [];
 
-// DOM Elements
-const productGrid = document.getElementById("product-grid");
-const cartBtn = document.getElementById("cart-btn");
-const closeCartBtn = document.getElementById("close-cart");
-const cartModal = document.getElementById("cart-modal");
-const cartItemsContainer = document.getElementById("cart-items");
-const cartCount = document.getElementById("cart-count");
-const cartTotalPrice = document.getElementById("cart-total-price");
 
-// Render Product Grid
-function renderProducts() {
-  productGrid.innerHTML = products.map(product => `
-    <div class="product-card">
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p>$${product.price}</p>
-      <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Bag</button>
-    </div>
-  `).join('');
-}
+/* Current filter */
 
-// Add Item to Cart
-function addToCart(id) {
-  const item = products.find(p => p.id === id);
-  cart.push(item);
-  updateCartUI();
-}
+let currentFilter = "all";
 
-// Update Cart Display & Count
-function updateCartUI() {
-  cartCount.textContent = cart.length;
-  
-  cartItemsContainer.innerHTML = cart.map(item => `
-    <li class="cart-item">
-      <span>${item.name}</span>
-      <span>$${item.price}</span>
-    </li>
-  `).join('');
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
-  cartTotalPrice.textContent = `$${total}`;
-}
+/* File input */
 
-// Toggle Modal Controls
-cartBtn.addEventListener("click", () => cartModal.style.display = "flex");
-closeCartBtn.addEventListener("click", () => cartModal.style.display = "none");
+const input = document.getElementById("fileInput");
 
-window.addEventListener("click", (e) => {
-  if (e.target === cartModal) cartModal.style.display = "none";
+
+/* =====================================
+   UPLOAD FILES
+===================================== */
+
+input.addEventListener("change", function (event) {
+
+    const files = [...event.target.files];
+
+
+    files.forEach(function (file) {
+
+        let type = null;
+
+
+        /* Check video */
+
+        if (file.type.startsWith("video/")) {
+
+            type = "video";
+
+        }
+
+
+        /* Check PDF */
+
+        else if (
+            file.type === "application/pdf" ||
+            file.name.toLowerCase().endsWith(".pdf")
+        ) {
+
+            type = "pdf";
+
+        }
+
+
+        /* Ignore unsupported files */
+
+        if (!type) {
+
+            return;
+
+        }
+
+
+        /* Create temporary browser URL */
+
+        const url = URL.createObjectURL(file);
+
+
+        /* Add file to array */
+
+        items.push({
+
+            id: crypto.randomUUID(),
+
+            name: file.name,
+
+            type: type,
+
+            size: file.size,
+
+            url: url
+
+        });
+
+    });
+
+
+    /* Reset input */
+
+    input.value = "";
+
+
+    /* Update page */
+
+    render();
+
 });
 
-// Initialize Page
-renderProducts();
+
+
+/* =====================================
+   FORMAT FILE SIZE
+===================================== */
+
+function formatSize(bytes) {
+
+    if (bytes < 1024 * 1024) {
+
+        return (
+            (bytes / 1024).toFixed(1)
+            + " KB"
+        );
+
+    }
+
+
+    return (
+        (bytes / 1024 / 1024).toFixed(1)
+        + " MB"
+    );
+
+}
+
+
+
+/* =====================================
+   DISPLAY FILES
+===================================== */
+
+function render() {
+
+    const grid =
+        document.getElementById("grid");
+
+
+    /* Apply filter */
+
+    const shown = items.filter(function (item) {
+
+        return (
+            currentFilter === "all" ||
+            item.type === currentFilter
+        );
+
+    });
+
+
+    /* Clear existing cards */
+
+    grid.innerHTML = "";
+
+
+    /* No files */
+
+    if (shown.length === 0) {
+
+        grid.innerHTML = `
+            <div class="empty">
+                No files in this section.
+            </div>
+        `;
+
+    }
+
+
+    /* Create cards */
+
+    shown.forEach(function (item) {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className = "card";
+
+
+        /* Video card */
+
+        if (item.type === "video") {
+
+            card.innerHTML = `
+
+                <div class="thumb">
+
+                    <video
+                        src="${item.url}"
+                        muted
+                        preload="metadata"
+                    ></video>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div
+                        class="title"
+                        title="${escapeHtml(item.name)}"
+                    >
+                        ${escapeHtml(item.name)}
+                    </div>
+
+
+                    <div class="meta">
+
+                        VIDEO
+                        •
+                        ${formatSize(item.size)}
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn small"
+                            onclick="openViewer('${item.id}')"
+                        >
+                            ▶ Open
+                        </button>
+
+
+                        <a
+                            class="btn secondary small"
+                            href="${item.url}"
+                            download="${escapeHtml(item.name)}"
+                        >
+                            ⬇ Download
+                        </a>
+
+
+                        <button
+                            class="btn secondary small"
+                            onclick="removeItem('${item.id}')"
+                        >
+                            🗑 Delete
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        /* PDF card */
+
+        else {
+
+            card.innerHTML = `
+
+                <div class="thumb">
+
+                    <div class="pdf-icon">
+                        📄
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <div
+                        class="title"
+                        title="${escapeHtml(item.name)}"
+                    >
+                        ${escapeHtml(item.name)}
+                    </div>
+
+
+                    <div class="meta">
+
+                        PDF
+                        •
+                        ${formatSize(item.size)}
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            class="btn small"
+                            onclick="openViewer('${item.id}')"
+                        >
+                            📖 Open
+                        </button>
+
+
+                        <a
+                            class="btn secondary small"
+                            href="${item.url}"
+                            download="${escapeHtml(item.name)}"
+                        >
+                            ⬇ Download
+                        </a>
+
+
+                        <button
+                            class="btn secondary small"
+                            onclick="removeItem('${item.id}')"
+                        >
+                            🗑 Delete
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    /* Update statistics */
+
+    updateStats();
+
+}
+
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHtml(text) {
+
+    return text.replace(
+        /[&<>"']/g,
+
+        function (character) {
+
+            return {
+
+                "&": "&amp;",
+
+                "<": "&lt;",
+
+                ">": "&gt;",
+
+                '"': "&quot;",
+
+                "'": "&#039;"
+
+            }[character];
+
+        }
+    );
+
+}
+
+
+
+/* =====================================
+   UPDATE STATISTICS
+===================================== */
+
+function updateStats() {
+
+    const videos =
+        items.filter(
+            item => item.type === "video"
+        ).length;
+
+
+    const pdfs =
+        items.filter(
+            item => item.type === "pdf"
+        ).length;
+
+
+    document.getElementById(
+        "videoCount"
+    ).textContent = videos;
+
+
+    document.getElementById(
+        "pdfCount"
+    ).textContent = pdfs;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent = items.length;
+
+}
+
+
+
+/* =====================================
+   FILTER
+===================================== */
+
+function filterItems(type, button) {
+
+    currentFilter = type;
+
+
+    /* Remove active */
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(function (tab) {
+
+            tab.classList.remove("active");
+
+        });
+
+
+    /* Add active */
+
+    button.classList.add("active");
+
+
+    render();
+
+}
+
+
+
+/* =====================================
+   OPEN VIDEO / PDF
+===================================== */
+
+function openViewer(id) {
+
+    const item =
+        items.find(
+            item => item.id === id
+        );
+
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const viewer =
+        document.getElementById("viewer");
+
+
+    /* Video */
+
+    if (item.type === "video") {
+
+        viewer.innerHTML = `
+
+            <video
+                src="${item.url}"
+                controls
+                autoplay
+            ></video>
+
+        `;
+
+    }
+
+
+    /* PDF */
+
+    else {
+
+        viewer.innerHTML = `
+
+            <iframe
+                src="${item.url}#toolbar=1"
+            ></iframe>
+
+        `;
+
+    }
+
+
+    /* Show modal */
+
+    document.getElementById(
+        "modal"
+    ).style.display = "flex";
+
+}
+
+
+
+/* =====================================
+   CLOSE VIEWER
+===================================== */
+
+function closeViewer() {
+
+    document.getElementById(
+        "modal"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "viewer"
+    ).innerHTML = "";
+
+}
+
+
+
+/* =====================================
+   DELETE ONE FILE
+===================================== */
+
+function removeItem(id) {
+
+    const item =
+        items.find(
+            item => item.id === id
+        );
+
+
+    if (item) {
+
+        /* Release browser memory */
+
+        URL.revokeObjectURL(item.url);
+
+    }
+
+
+    /* Remove from array */
+
+    items =
+        items.filter(
+            item => item.id !== id
+        );
+
+
+    render();
+
+}
+
+
+
+/* =====================================
+   DELETE ALL FILES
+===================================== */
+
+function clearAll() {
+
+    if (items.length === 0) {
+
+        return;
+
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Delete all uploaded files from this page?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    /* Release URLs */
+
+    items.forEach(function (item) {
+
+        URL.revokeObjectURL(item.url);
+
+    });
+
+
+    /* Empty array */
+
+    items = [];
+
+
+    render();
+
+}
+
+
+
+/* =====================================
+   INITIAL PAGE LOAD
+===================================== */
+
+render();
