@@ -1,226 +1,571 @@
-/* Reset & Base Styles */
+/* =========================
+   RESET
+========================= */
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Playfair Display', Georgia, serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
+
+/* =========================
+   BODY
+========================= */
 
 body {
-  background-color: #faf8f5;
-  color: #2c2c2c;
-  line-height: 1.6;
+    font-family: Arial, sans-serif;
+
+    background: #0b0b0f;
+
+    color: white;
+
+    min-height: 100vh;
 }
 
-/* Navigation */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 5%;
-  background-color: #ffffff;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    height: 68px;
+
+    background: #111118;
+
+    border-bottom: 1px solid #292934;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 5%;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 10;
 }
+
+
+/* Logo */
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+    font-size: 23px;
+
+    font-weight: 800;
+
+    color: white;
 }
 
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
+
+.logo span {
+    color: #ff3b30;
 }
 
-.nav-links a {
-  text-decoration: none;
-  color: #2c2c2c;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color 0.3s;
+
+/* Navigation */
+
+nav {
+    display: flex;
+
+    gap: 22px;
 }
 
-.nav-links a:hover {
-  color: #c5a059;
+
+nav a {
+    color: #aaa;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.2s;
 }
 
-.cart-icon {
-  position: relative;
-  cursor: pointer;
-  font-size: 1.2rem;
+
+nav a:hover {
+    color: white;
 }
 
-#cart-count {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  background-color: #c5a059;
-  color: #fff;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.75rem;
-  font-family: sans-serif;
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 90%;
+
+    max-width: 1200px;
+
+    margin: 35px auto;
 }
 
-/* Hero Section */
+
+/* =========================
+   HERO
+========================= */
+
 .hero {
-  height: 70vh;
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-              url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #ffffff;
+    padding: 30px 0 25px;
 }
 
-.hero-content h1 {
-  font-size: 3.5rem;
-  margin-bottom: 0.5rem;
+
+.hero h1 {
+    font-size: 34px;
+
+    margin-bottom: 10px;
 }
 
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 1.5rem;
-  font-weight: 300;
+
+.hero p {
+    color: #aaa;
 }
+
+
+/* =========================
+   UPLOAD AREA
+========================= */
+
+.upload-area {
+    margin-top: 25px;
+
+    border: 1.5px dashed #4a4a58;
+
+    border-radius: 18px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    background: #121219;
+
+    transition: 0.3s;
+}
+
+
+.upload-area:hover {
+    border-color: #777;
+}
+
+
+.upload-area h2 {
+    font-size: 20px;
+
+    margin-bottom: 8px;
+}
+
+
+.upload-area p {
+    color: #999;
+
+    margin-bottom: 18px;
+}
+
+
+/* Hide file input */
+
+input[type="file"] {
+    display: none;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .btn {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background-color: #c5a059;
-  color: #fff;
-  text-decoration: none;
-  border: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background 0.3s;
+    display: inline-block;
+
+    background: #ff3b30;
+
+    color: white;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    padding: 12px 20px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    transition: 0.2s;
 }
+
 
 .btn:hover {
-  background-color: #a38241;
+    opacity: 0.88;
+
+    transform: translateY(-1px);
 }
 
-/* Product Section */
-.products-section {
-  padding: 4rem 5%;
-  text-align: center;
+
+.btn.secondary {
+    background: #24242e;
+
+    margin-left: 8px;
 }
 
-.products-section h2 {
-  font-size: 2.2rem;
-  margin-bottom: 2.5rem;
-  position: relative;
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: flex;
+
+    gap: 12px;
+
+    margin: 24px 0;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+
+.stat {
+    background: #15151d;
+
+    border: 1px solid #282832;
+
+    padding: 13px 18px;
+
+    border-radius: 12px;
+
+    color: #bbb;
 }
 
-.product-card {
-  background: #ffffff;
-  padding: 1rem;
-  border: 1px solid #eee;
-  text-align: left;
-  transition: transform 0.3s;
+
+.stat b {
+    color: white;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
 }
 
-.product-card img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
+
+.tab {
+    background: #171720;
+
+    color: #aaa;
+
+    border: 1px solid #292934;
+
+    padding: 9px 16px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
-.product-card h3 {
-  font-size: 1.1rem;
-  margin: 0.8rem 0 0.4rem;
+
+.tab:hover {
+    color: white;
 }
 
-.product-card p {
-  color: #c5a059;
-  font-weight: bold;
-  margin-bottom: 0.8rem;
+
+.tab.active {
+    background: white;
+
+    color: #111;
 }
 
-.add-to-cart {
-  width: 100%;
-  padding: 0.6rem;
-  background-color: #2c2c2c;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
+
+/* =========================
+   FILE GRID
+========================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(260px, 1fr)
+        );
+
+    gap: 18px;
 }
 
-.add-to-cart:hover {
-  background-color: #c5a059;
+
+/* =========================
+   FILE CARD
+========================= */
+
+.card {
+    background: #15151d;
+
+    border: 1px solid #292934;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    transition: 0.25s;
 }
 
-/* Cart Modal */
-.cart-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  justify-content: flex-end;
-  z-index: 200;
+
+.card:hover {
+    transform: translateY(-4px);
+
+    border-color: #454553;
 }
 
-.cart-content {
-  background: #fff;
-  width: 100%;
-  max-width: 400px;
-  height: 100%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
+
+/* =========================
+   THUMBNAIL
+========================= */
+
+.thumb {
+    height: 145px;
+
+    background: #20202a;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
 }
 
-.close-btn {
-  align-self: flex-end;
-  font-size: 1.5rem;
-  cursor: pointer;
+
+/* Video preview */
+
+.thumb video {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
 }
 
-.cart-items {
-  list-style: none;
-  margin-top: 1.5rem;
-  flex-grow: 1;
-  overflow-y: auto;
+
+/* PDF icon */
+
+.pdf-icon {
+    font-size: 48px;
+
+    color: #ff3b30;
 }
 
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
+
+/* =========================
+   CARD BODY
+========================= */
+
+.card-body {
+    padding: 15px;
 }
 
-.cart-total {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin: 1rem 0;
+
+.title {
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    margin-bottom: 8px;
 }
 
-.checkout-btn {
-  width: 100%;
+
+.meta {
+    font-size: 12px;
+
+    color: #888;
+
+    margin-bottom: 13px;
+}
+
+
+/* =========================
+   CARD ACTIONS
+========================= */
+
+.actions {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+.small {
+    padding: 8px 11px;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   EMPTY MESSAGE
+========================= */
+
+.empty {
+    text-align: center;
+
+    color: #777;
+
+    padding: 50px 0;
+
+    grid-column: 1 / -1;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    z-index: 30;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+/* Modal box */
+
+.modal-box {
+    width: min(1000px, 96vw);
+
+    height: min(720px, 90vh);
+
+    background: #111118;
+
+    border: 1px solid #333;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    position: relative;
+}
+
+
+/* Viewer video */
+
+.modal-box video {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* PDF */
+
+.modal-box iframe {
+    width: 100%;
+
+    height: 100%;
+
+    border: 0;
+}
+
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+
+.close {
+    position: absolute;
+
+    right: 12px;
+
+    top: 10px;
+
+    z-index: 2;
+
+    background: #ff3b30;
+
+    border: 0;
+
+    color: white;
+
+    border-radius: 50%;
+
+    width: 36px;
+
+    height: 36px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    nav {
+        display: none;
+    }
+
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+
+    .container {
+        width: 94%;
+    }
+
+
+    .upload-area {
+        padding: 22px;
+    }
+
+
+    .stats {
+        overflow-x: auto;
+    }
+
+
+    .stat {
+        white-space: nowrap;
+    }
+
+
+    .btn.secondary {
+        margin-left: 4px;
+    }
+
 }
